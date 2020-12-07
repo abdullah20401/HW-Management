@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 from .models import Assignment
 
+from .models import Assignment
 
 class HomeView(TemplateView):
     template_name = 'HomeworkManagementApp/home.html'

@@ -7,10 +7,15 @@
         <h4 class="card-header card-header-danger text-center">
             <strong>Missing</strong>
         </h4>
-            
+        {% if assignments %}
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Missing Assignment</li>
+                    {% for assignment in assignments %}
+                        {% if assignment.time_ago %}
+                            <li class="list-group-item">{{ assignment.assignment_name }}</li>
+                        {% endif %}
+                    {% endfor %}
                 </ul>
+        {% endif %}
         </div>
     </div>
 
@@ -22,9 +27,11 @@
         </h4>
         {% if assignments %}
             <ul class="list-group list-group-flush">
-                {% for assignment in assignments %}
-                    <li class="list-group-item">{{ assignment.assignment_name }}</li>
-                {% endfor %}
+                    {% for assignment in assignments %}
+                        {% if assignment.time_ago == False %}
+                            <li class="list-group-item">{{ assignment.assignment_name }}</li>
+                        {% endif %}
+                    {% endfor %}
             </ul>
         {% endif %}
         </div>
