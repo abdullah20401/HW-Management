@@ -35,7 +35,7 @@ class Assignment(models.Model):
     file_attachment = models.FileField(blank=True)
 
     def time_ago(self):
-        return self.due_date >= timezone.now()
+        return self.due_date <= timezone.now()
 
     def __str__(self):
         return self.assignment_name

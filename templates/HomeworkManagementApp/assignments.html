@@ -9,11 +9,41 @@
         </h4>
         {% if assignments %}
                 <ul class="list-group list-group-flush">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <th>
+                                <strong>Name</strong>
+                            </th>
+                            <th>
+                                <strong>Due Date</strong>
+                            </th>
+                            <th>
+                                <strong>Class</strong>
+                            </th>
+                        </thead>
+                        <tbody>
                     {% for assignment in assignments %}
                         {% if assignment.time_ago %}
-                            <li class="list-group-item">{{ assignment.assignment_name }}</li>
+                            <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
+                                <tr>
+                                    <td>
+                                        {{ assignment.assignment_name }}
+                                    </td>
+                                    <td class="text-danger">
+                                        {{ assignment.due_date }}
+                                    </td>
+                                    <td>
+                                        {{ assignment.assignment_class }}
+                                    </td>
+                                    <!-- <td class="text-primary">
+                                        $36,738
+                                    </td> -->
+                                </tr>
+
                         {% endif %}
                     {% endfor %}
+                        </tbody>
+                    </table>
                 </ul>
         {% endif %}
         </div>
@@ -22,17 +52,47 @@
     <div class="col-sm">
         <div class="card card-nav-tabs" style="width: 60rem; margin: 2rem;">
             <h4 class="card-header card-header-info text-center">
-                <strong>Assignments</strong>
+                <strong>Upcoming</strong>
             </h4>
         </h4>
-        {% if assignments %}
-            <ul class="list-group list-group-flush">
+         {% if assignments %}
+                <ul class="list-group list-group-flush">
+                    <table class="table">
+                        <thead class=" text-primary">
+                            <th>
+                                <strong>Name</strong>
+                            </th>
+                            <th>
+                                <strong>Due Date</strong>
+                            </th>
+                            <th>
+                                <strong>Class</strong>
+                            </th>
+                        </thead>
+                        <tbody>
                     {% for assignment in assignments %}
                         {% if assignment.time_ago == False %}
-                            <li class="list-group-item">{{ assignment.assignment_name }}</li>
+                            <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
+                                <tr>
+                                    <td>
+                                        {{ assignment.assignment_name }}
+                                    </td>
+                                    <td>
+                                        {{ assignment.due_date }}
+                                    </td>
+                                    <td>
+                                        {{ assignment.assignment_class }}
+                                    </td>
+                                    <!-- <td class="text-primary">
+                                        $36,738
+                                    </td> -->
+                                </tr>
+
                         {% endif %}
                     {% endfor %}
-            </ul>
+                        </tbody>
+                    </table>
+                </ul>
         {% endif %}
         </div>
     </div>
