@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -18,6 +19,7 @@ class Classroom(models.Model):
     class_description = models.CharField(max_length=100)
     # teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     teacher = models.ManyToManyField(Teacher)
+    class_syllabus = models.FileField(blank=True)
 
     def __str__(self):
         return self.class_name
@@ -27,7 +29,9 @@ class Assignment(models.Model):
     assignment_name = models.CharField(max_length=50)
     assignment_description = models.CharField(max_length=100)
     assignment_class = models.ForeignKey(Classroom, on_delete=models.CASCADE)
+    date_assigned = models.DateTimeField(default=timezone.now)
     due_date = models.DateTimeField()
+    file_attachment = models.FileField(blank=True)
 
     def __str__(self):
         return self.assignment_name
