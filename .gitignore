@@ -3,3 +3,6 @@
 
 # Secrets
 secret_settings.py
+
+# PyCache
+__pycache__/
