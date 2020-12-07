@@ -1,0 +1,5 @@
+# Gitpod
+.theia/
+
+# Secrets
+secret_settings.py
