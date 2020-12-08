@@ -2,59 +2,61 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-sm">
-        <div class="card card-nav-tabs" style="width: 70%;">
-        <h4 class="card-header card-header-danger text-center">
-            <strong>Missing</strong>
-        </h4>
-        {% if assignments %}
-                <ul class="list-group list-group-flush">
-                    <table class="table">
-                        <thead class=" text-primary">
-                            <th>
-                                <strong>Name</strong>
-                            </th>
-                            <th>
-                                <strong>Due Date</strong>
-                            </th>
-                            <th>
-                                <strong>Class</strong>
-                            </th>
-                        </thead>
-                        <tbody>
-                    {% for assignment in assignments %}
-                        {% if assignment.time_ago %}
-                            <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
-                                <tr>
-                                    <td>
-                                        {{ assignment.assignment_name }}
-                                    </td>
-                                    <td class="text-danger">
-                                        {{ assignment.due_date }}
-                                    </td>
-                                    <td>
-                                        {{ assignment.assignment_class }}
-                                    </td>
-                                    <!-- <td class="text-primary">
-                                        $36,738
-                                    </td> -->
-                                </tr>
+        <div class="col-sm-4">
+            <div class="card card-nav-tabs">
+                <h4 class="card-header card-header-danger text-center">
+                    <strong>Missing</strong>
+                </h4>
+                {% if assignments %}
+                        <ul class="list-group list-group-flush">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        <strong>Name</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Due Date</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Class</strong>
+                                    </th>
+                                </thead>
+                                <tbody>
+                            {% for assignment in assignments %}
+                                {% if assignment.time_ago %}
+                                    <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
+                                        <tr>
+                                            <td>
+                                                {{ assignment.assignment_name }}
+                                            </td>
+                                            <td class="text-danger">
+                                                {{ assignment.due_date }}
+                                            </td>
+                                            <td>
+                                                {{ assignment.assignment_class }}
+                                            </td>
+                                            <!-- <td class="text-primary">
+                                                $36,738
+                                            </td> -->
+                                        </tr>
 
-                        {% endif %}
-                    {% endfor %}
-                        </tbody>
-                    </table>
-                </ul>
-        {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                                </tbody>
+                            </table>
+                        </ul>
+                {% endif %}
+            </div>
         </div>
-    </div>
-
-    <div class="col-sm">
-        <div class="card card-nav-tabs" style="width: 110%">
+        
+        <div class="col-sm-7">
+        <div class="card card-nav-tabs">
             <h4 class="card-header card-header-info text-center">
                 <strong>Upcoming</strong>
+                <a href="{% url 'home' %}">
+                    <i class="material-icons justify-content-center float-right" style="font-size: 160%">add</i>
+                </a>
             </h4>
-        </h4>
          {% if assignments %}
                 <ul class="list-group list-group-flush">
                     <table class="table">
@@ -96,6 +98,5 @@
         {% endif %}
         </div>
     </div>
-    
 </div>
 {% endblock %}

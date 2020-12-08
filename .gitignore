@@ -1,6 +1,9 @@
 # Gitpod
 .theia/
 
+# PyCharm
+.idea/
+
 # Secrets
 secret_settings.py
 
