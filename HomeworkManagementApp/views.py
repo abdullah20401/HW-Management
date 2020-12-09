@@ -1,16 +1,14 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from django.http import HttpResponse
-from .models import Assignment
-
 from .models import Assignment
 
 class HomeView(TemplateView):
     template_name = 'HomeworkManagementApp/home.html'
 
-class AssignmentsView(TemplateView):
+class AssignmentView(TemplateView):
     # model = Assignment
-    template_name = 'HomeworkManagementApp/assignments.html'
+    template_name = 'HomeworkManagementApp/assignment.html'
 
     # context_object_name = 'assignments'
     # ordering = ['-date_assigned']
@@ -20,8 +18,12 @@ class AssignmentsView(TemplateView):
         context['assignments'] = Assignment.objects.all()
         return context
 
-class CoursesView(TemplateView):
-    template_name = 'HomeworkManagementApp/courses.html'
+class AssignmentCreate(CreateView):
+    model = Assignment
+    fields = '__all__'
 
-class InstructorsView(TemplateView):
-    template_name = 'HomeworkManagementApp/instructors.html'
+class CourseView(TemplateView):
+    template_name = 'HomeworkManagementApp/course.html'
+
+class InstructorView(TemplateView):
+    template_name = 'HomeworkManagementApp/instructor.html'
