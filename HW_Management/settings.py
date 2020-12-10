@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'HomeworkManagementApp.apps.HomeworkmanagementappConfig',
 
     'phonenumber_field',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import TemplateView, CreateView
 from django.http import HttpResponse
 from .models import Assignment
@@ -21,6 +22,9 @@ class AssignmentView(TemplateView):
 class AssignmentCreate(CreateView):
     model = Assignment
     fields = '__all__'
+
+    def get_success_url(self):
+        return reverse('assignment')
 
 class CourseView(TemplateView):
     template_name = 'HomeworkManagementApp/course.html'
