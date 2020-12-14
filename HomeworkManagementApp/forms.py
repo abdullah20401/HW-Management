@@ -5,11 +5,11 @@ from .models import Assignment
 class AssignmentCreateForm(forms.ModelForm):
     class Meta:
         model = Assignment
-        fields = '__all__'
+        fields = ['assignment_name', 'assignment_description', 'assignment_class', 'date_assigned', 'due_date', 'file_attachment']
 
     # due_date = forms.DateTimeField(
     #     widget=forms.DateTimeInput(
-    #         attrs={'type': 'datetime', 'class': 'dropdown-menu bootstrap-datetimepicker-widget'}
+    #         attrs={'class': 'dropdown-menu bootstrap-datetimepicker-widget'}
     #     )
     # )
     # file_attachment = forms.FileField(
