@@ -2,7 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import TemplateView, CreateView
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+
 from .models import Assignment
+from .forms import AssignmentCreateForm
 
 class HomeView(TemplateView):
     template_name = 'HomeworkManagementApp/home.html'
@@ -20,8 +23,9 @@ class AssignmentView(TemplateView):
         return context
 
 class AssignmentCreate(CreateView):
+    form_class = AssignmentCreateForm
     model = Assignment
-    fields = '__all__'
+    # fields = '__all__'
 
     def get_success_url(self):
         return reverse('assignment')
