@@ -9,13 +9,9 @@ python:
     - "3.9"
     - "3.9-dev"  # 3.9 development branch
     - "nightly"  # nightly build
-services:
-    - mysql
 env:
-    - DJANGO=3.1 DB=mysql
+    - DJANGO=3.1
 install:
     - pip install -r requirements.txt
-before_script:
-    - mysql -e 'create database test;' -u root
 script:
     - python manage.py test
