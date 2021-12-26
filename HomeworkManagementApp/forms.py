@@ -10,9 +10,9 @@ class AssignmentCreateForm(forms.ModelForm):
         fields = ['assignment_name', 'assignment_description', 'assignment_class', 'date_assigned', 'due_date', 'file_attachment']
         widgets = {'due_date': DateTimeInput(), 'date_assigned': DateTimeInput()}
 
-
     file_attachment = forms.FileField(
+        required=False,
         widget=forms.FileInput(
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-control', 'required': 'False'}
         )
     )

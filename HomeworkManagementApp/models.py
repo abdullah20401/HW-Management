@@ -28,11 +28,11 @@ class Classroom(models.Model):
 
 class Assignment(models.Model):
     assignment_name = models.CharField(max_length=50)
-    assignment_description = models.CharField(max_length=100)
+    assignment_description = models.CharField(max_length=100, blank=True)
     assignment_class = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     date_assigned = models.DateTimeField(default=timezone.now)
     due_date = models.DateTimeField()
-    file_attachment = models.FileField(blank=True)
+    file_attachment = models.FileField(blank=True, null=True)
 
     def time_ago(self):
         return self.due_date <= timezone.now()
