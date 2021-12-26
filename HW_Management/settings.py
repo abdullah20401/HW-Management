@@ -132,3 +132,5 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# Added to avoid warning when running on django 3.2 and up
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
