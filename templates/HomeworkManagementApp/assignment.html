@@ -25,21 +25,20 @@
                             {% for assignment in assignments %}
                                 {% if assignment.time_ago %}
                                     <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
-                                        <tr>
-                                            <td>
-                                                {{ assignment.assignment_name }}
-                                            </td>
-                                            <td class="text-danger">
-                                                {{ assignment.due_date }}
-                                            </td>
-                                            <td>
-                                                {{ assignment.assignment_class }}
-                                            </td>
-                                            <!-- <td class="text-primary">
-                                                $36,738
-                                            </td> -->
-                                        </tr>
-
+                                    <tr onclick="location.href='{% url "assignment-detail" assignment.pk %}'">        
+                                        <td>
+                                            {{ assignment.assignment_name }}
+                                        </td>
+                                        <td class="text-danger">
+                                            {{ assignment.due_date }}
+                                        </td>
+                                        <td>
+                                            {{ assignment.assignment_class }}
+                                        </td>
+                                        <!-- <td class="text-primary">
+                                            $36,738
+                                        </td> -->
+                                    </tr>
                                 {% endif %}
                             {% endfor %}
                                 </tbody>
@@ -75,7 +74,7 @@
                     {% for assignment in assignments %}
                         {% if assignment.time_ago == False %}
                             <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
-                                <tr>
+                                <tr onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                     <td>
                                         {{ assignment.assignment_name }}
                                     </td>

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, DeleteView
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
@@ -29,6 +29,16 @@ class AssignmentCreate(CreateView):
 
     def get_success_url(self):
         return reverse('assignment')
+
+class AssignmentDetailView(DetailView):
+    model = Assignment
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        
+        return super().get_context_data(**kwargs)
+    
 
 class CourseView(TemplateView):
     template_name = 'HomeworkManagementApp/course.html'

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card card-nav-tabs">
+    {% if assignment.time_ago %}
+        <h3 class="card-header card-header-danger">{{ assignment.assignment_name }}</h3>
+    {% else %}
+        <h3 class="card-header card-header-info">{{ assignment.assignment_name }}</h3>
+    {% endif %}
+        <div class="card-body">
+            <h5 class="card-text">{{ assignment.assignment_description }}</h5>
+            {% if assignment.file_attachment %}
+                <img class="card-img-bottom" src="{{ assignment.file_attachment }}" alt="File Attachment">
+            {% endif %}
+            <p class="card-text">{{ assignment.assignment_class }}</p>
+            <div class="card card-stats">
+                <div class="card-footer">
+                    <div class="stats">
+                        <strong>Date Assigned:</strong>
+                        <i class="material-icons">date_range</i> {{ assignment.date_assigned }}
+                    </div>
+                    <div class="stats">
+                        {% if assignment.time_ago %}
+                        <div class="text-danger">
+                            <strong>Due Date:</strong>
+                            <i class="material-icons">date_range</i> {{ assignment.due_date }}
+                        </div>
+                        {% else %}
+                            <strong>Due Date:</strong>
+                            <i class="material-icons">date_range</i> {{ assignment.due_date }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if assignment.time_ago %}
+                <a href="{% url 'assignment' %}" class="btn btn-danger">Go Back</a>
+            {% else %}
+                <a href="{% url 'assignment' %}" class="btn btn-info">Go Back</a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
