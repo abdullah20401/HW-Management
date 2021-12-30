@@ -1,16 +1,50 @@
-from django.shortcuts import render
-from django.urls import reverse
-from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, DeleteView
+from django.db.models import fields
+from django.shortcuts import redirect, render
+from django.urls import reverse, reverse_lazy
+from django.views.generic import TemplateView, CreateView, FormView, DetailView, UpdateView, DeleteView
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 
-from .models import Assignment
-from .forms import AssignmentCreateForm
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 
-class HomeView(TemplateView):
+from .models import Assignment
+from .forms import CustomUserCreationForm, AssignmentCreateForm
+
+class CustomLoginView(LoginView):
+    template_name = 'HomeworkManagementApp/login.html'
+    fields = '__all__'
+    redirect_authenticated_user = True
+    
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+class RegisterPage(FormView):
+    template_name = 'HomeworkManagementApp/register.html'
+    form_class = CustomUserCreationForm
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('home')
+        
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+            
+        return super(RegisterPage, self).form_valid(form)
+    
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('home')
+        return super(RegisterPage, self).get(*args, **kwargs)
+
+
+class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'HomeworkManagementApp/home.html'
 
-class AssignmentView(TemplateView):
+class AssignmentView(LoginRequiredMixin, TemplateView):
     # model = Assignment
     template_name = 'HomeworkManagementApp/assignment.html'
 
@@ -19,10 +53,13 @@ class AssignmentView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['assignments'] = Assignment.objects.all()
+        
+        context['assignments'] = Assignment.objects.filter(user=self.request.user)
+        context['assignment_count'] = context['assignments'].count()
+        
         return context
 
-class AssignmentCreate(CreateView):
+class AssignmentCreate(LoginRequiredMixin, CreateView):
     form_class = AssignmentCreateForm
     model = Assignment
     # fields = '__all__'
@@ -30,18 +67,20 @@ class AssignmentCreate(CreateView):
     def get_success_url(self):
         return reverse('assignment')
 
-class AssignmentDetailView(DetailView):
+class AssignmentDetailView(LoginRequiredMixin, DetailView):
     model = Assignment
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        
         return super().get_context_data(**kwargs)
     
 
-class CourseView(TemplateView):
+class CourseView(LoginRequiredMixin, TemplateView):
     template_name = 'HomeworkManagementApp/course.html'
 
-class InstructorView(TemplateView):
+class InstructorView(LoginRequiredMixin, TemplateView):
     template_name = 'HomeworkManagementApp/instructor.html'
+    
+class AccountView(LoginRequiredMixin, TemplateView):
+    template_name = 'HomeworkManagementApp/account.html'

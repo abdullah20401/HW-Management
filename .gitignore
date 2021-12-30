@@ -5,7 +5,7 @@
 .idea/
 
 # Secrets
-secret_settings.py
+.env
 
 # PyCache
 __pycache__/

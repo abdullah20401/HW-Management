@@ -11,6 +11,10 @@
     </a></div>
     <div class="sidebar-wrapper">
         <ul class="nav">
+            <!--
+                Assigns variable url_name
+                If url_name is equal to 'home', then the class becames active. This changes it's color ot appear blue.
+            -->
             {% with url_name=request.resolver_match.url_name %}
                 <li class="nav-item {% if url_name == 'home' %}active{% endif %}">
                     <a class="nav-link" href="{% url 'home' %}">
@@ -36,19 +40,19 @@
                         <p>Instructors</p>
                     </a>
                 </li>
-                <li class="nav-item {% if url_name == 'index' %}active{% endif %}">
+                <li class="nav-item {% if url_name == 'notification' %}active{% endif %}">
                     <a class="nav-link" href="./notifications.html">
                         <i class="material-icons">notifications</i>
                         <p>Notifications</p>
                     </a>
                 </li>
+                <li class="nav-item {% if url_name == 'account' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'account' %}">
+                        <i class="material-icons">manage_accounts</i>
+                        <p>Account</p>
+                    </a>
+                </li>
             {% endwith %}
-            <!-- <li class="nav-item active-pro ">
-                  <a class="nav-link" href="./upgrade.html">
-                      <i class="material-icons">unarchive</i>
-                      <p>Upgrade to PRO</p>
-                  </a>
-              </li> -->
         </ul>
     </div>
 </div>

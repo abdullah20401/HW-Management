@@ -10,7 +10,7 @@
         <div class="card-body">
             <h5 class="card-text">{{ assignment.assignment_description }}</h5>
             {% if assignment.file_attachment %}
-                <img class="card-img-bottom" src="{{ assignment.file_attachment }}" alt="File Attachment">
+                <img class="card-img-bottom" src="{{ assignment.file_attachment.url }}" alt="File Attachment">
             {% endif %}
             <p class="card-text">{{ assignment.assignment_class }}</p>
             <div class="card card-stats">

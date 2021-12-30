@@ -85,11 +85,21 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)">
+                            <a class="nav-link" href="{% url 'account' %}">
                                 <i class="material-icons">person</i>
+                                {% if request.user.is_authenticated %}
+                                    <p class="d-lg-none d-md-block">
+                                        {{ request.user }}
+                                    </p>
+                                    <!-- <a href="">Logout</a> -->
+                                <!-- 
+                                    <a href="">Login</a> -->
+                                {% else %}
                                 <p class="d-lg-none d-md-block">
                                     Account
                                 </p>
+                                {% endif %}
+
                             </a>
                         </li>
                     </ul>

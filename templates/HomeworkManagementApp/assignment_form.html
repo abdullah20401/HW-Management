@@ -3,12 +3,8 @@
 
 {% block content %}
     <form method="post">{% csrf_token %}
-        {{ form|crispy }}
-
-        {{ form.file_attachment }}
+        {{ form.as_p }}
         
-        <br><br>
-
         <input class="btn btn-success" type="submit" value="Save">
     </form>
 

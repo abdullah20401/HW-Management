@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="card card-stats">
+            <div class="card-header card-header-info card-header-icon">
+              <div class="card-icon">
+                  <i class="material-icons">person</i>
+              </div>
+              <h3 class="card-title text-left text-info">{{ request.user }}</h3>
+            </div>
+            <div class="card-footer">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="stats">
+                            <h4 class="card-category"><i class="material-icons material-icons-md">badge</i><a class="text-lightgrey"> {{ request.user.first_name }} {{ request.user.last_name }}</a></h4>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="stats">
+                            <h4 class="card-category"><i class="material-icons material-icons-md">mail</i><a class="text-lightgrey"> {{ request.user.email }}</a></h4>
+                        </div>
+                    </li>
+                  </ul>
+            </div>
+            <div class="card-footer padding-left">
+                <a href="{% url 'logout' %}" class="btn btn-danger" role="button"><i class="material-icons material-icons-lg">logout</i>Log Out</a>
+                <a href="#" class="btn btn-danger" role="button"><i class="material-icons material-icons-lg">delete_forever</i>Delete Account</a>
+
+            </div>
+            <div class="card-footer">
+                <p class="card-category padding"><a class="text-lightgrey"> <strong>Last Login: </strong></strong>{{ request.user.last_login }}</a></p>
+                <p class="card-category padding"><a class="text-lightgrey"> <strong>Date Joined: </strong></strong>{{ request.user.date_joined }}</a></p>
+            </div>
+        </div>
+</div>
+<style>
+    .padding {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 0.75rem 1.55rem !important;
+    }
+    .padding-left {
+        padding: 2rem 1.55rem !important;
+    }
+    .text-lightgrey {
+        color: #999999 !important;
+    }
+    .material-icons-md {
+        text-align: center !important;
+        align-items: center !important;
+        font-size: 20px !important;
+    }
+    .material-icons-lg {
+        text-align: center !important;
+        align-items: center !important;
+        padding-right: 0.5rem !important;
+        font-size: 24px !important;
+    }
+</style>
+{% endblock %}
