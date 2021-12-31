@@ -46,7 +46,7 @@
                         <p>Notifications</p>
                     </a>
                 </li>
-                <li class="nav-item {% if url_name == 'account' %}active{% endif %}">
+                <li class="nav-item {% if url_name == 'account' or url_name == 'account-update' or url_name == 'account-delete'%}active{% endif %}">
                     <a class="nav-link" href="{% url 'account' %}">
                         <i class="material-icons">manage_accounts</i>
                         <p>Account</p>

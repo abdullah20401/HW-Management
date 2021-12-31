@@ -26,8 +26,7 @@
             </div>
             <div class="card-footer padding-left">
                 <a href="{% url 'logout' %}" class="btn btn-danger" role="button"><i class="material-icons material-icons-lg">logout</i>Log Out</a>
-                <a href="#" class="btn btn-danger" role="button"><i class="material-icons material-icons-lg">delete_forever</i>Delete Account</a>
-
+                <a href="{% url 'account-update' %}" class="btn btn-warning" role="button"><i class="material-icons material-icons-lg">update</i>Update Account</a>
             </div>
             <div class="card-footer">
                 <p class="card-category padding"><a class="text-lightgrey"> <strong>Last Login: </strong></strong>{{ request.user.last_login }}</a></p>

@@ -55,6 +55,7 @@ class CustomUserCreationForm(UserCreationForm):
         )  
         return user  
 
+
 class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
 

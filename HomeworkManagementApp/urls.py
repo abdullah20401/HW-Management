@@ -7,6 +7,7 @@ from . import views
 
 from django.contrib.auth.views import LogoutView
 
+
 urlpatterns = [
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
@@ -18,7 +19,11 @@ urlpatterns = [
     path('assignment/<int:pk>/', views.AssignmentDetailView.as_view(), name='assignment-detail'),
     path('course/', views.CourseView.as_view(), name='course'),
     path('instructor/', views.InstructorView.as_view(), name='instructor'),
+    
     path('account/', views.AccountView.as_view(), name='account'),
+    path('account/update/', views.AccountUpdateView.as_view(), name='account-update'),
+    path('account/update/password/', views.AccountPasswordUpdateView.as_view(), name='account-password'),
+    path('account/delete/', views.AccountDeleteView.as_view(), name='account-delete'),
 ]
 
 if settings.DEBUG:
