@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <div class="row">
         <div class="col-md-5">
             <div class="card card-nav-tabs">
@@ -9,7 +10,7 @@
                 </h4>
                 {% if assignments %}
                         <ul class="list-group list-group-flush">
-                            <table class="table text-center">
+                            <table class="table table-hover text-center">
                                 <thead class=" text-primary">
                                     <th>
                                         <strong>Name</strong>
@@ -20,20 +21,24 @@
                                     <th>
                                         <strong>Class</strong>
                                     </th>
+                                    <th></th>
                                 </thead>
                                 <tbody>
                             {% for assignment in assignments %}
-                                {% if assignment.time_ago %}
+                                {% if assignment.time_ago and assignment.completed == False %}
                                     <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
-                                    <tr onclick="location.href='{% url "assignment-detail" assignment.pk %}'">        
-                                        <td>
+                                    <tr>        
+                                        <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                             {{ assignment.assignment_name }}
                                         </td>
-                                        <td class="text-danger">
+                                        <td class="text-danger" onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                             {{ assignment.due_date }}
                                         </td>
-                                        <td>
+                                        <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                             {{ assignment.assignment_class }}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" onclick="location.href='{% url "assignment-complete" assignment.pk %}'" style="padding: 7px 7px; border-radius: 50%;"><i class="material-icons">check</i></button>
                                         </td>
                                         <!-- <td class="text-primary">
                                             $36,738
@@ -58,7 +63,7 @@
             </h4>
          {% if assignments %}
                 <ul class="list-group list-group-flush">
-                    <table class="table text-center">
+                    <table class="table table-hover text-center">
                         <thead class=" text-primary">
                             <th>
                                 <strong>Name</strong>
@@ -69,20 +74,24 @@
                             <th>
                                 <strong>Class</strong>
                             </th>
+                            <th></th>
                         </thead>
                         <tbody>
                     {% for assignment in assignments %}
-                        {% if assignment.time_ago == False %}
+                        {% if assignment.time_ago == False and assignment.completed == False %}
                             <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
-                                <tr onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
-                                    <td>
+                                <tr>
+                                    <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                         {{ assignment.assignment_name }}
                                     </td>
-                                    <td>
+                                    <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                         {{ assignment.due_date }}
                                     </td>
-                                    <td>
+                                    <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                         {{ assignment.assignment_class }}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-success" onclick="location.href='{% url "assignment-complete" assignment.pk %}'" style="padding: 7px 7px; border-radius: 50%;"><i class="material-icons">check</i></button>
                                     </td>
                                     <!-- <td class="text-primary">
                                         $36,738
@@ -98,4 +107,52 @@
         </div>
     </div>
 </div>
+
+{% if assignments and assignment_completed_count > 0 %}
+    <div class="card card-nav-tabs">
+        <h4 class="card-header card-header-success text-center">
+            <strong>Marked as Done</strong>
+        </h4>
+            <ul class="list-group list-group-flush">
+                <table class="table table-hover text-center">
+                    <thead class=" text-primary">
+                        <th>
+                            <strong>Name</strong>
+                        </th>
+                        <th>
+                            <strong>Due Date</strong>
+                        </th>
+                        <th>
+                            <strong>Class</strong>
+                        </th>
+                    </thead>
+                    <tbody>
+                    
+                    {% for assignment in assignments %}
+                        {% if assignment.completed %}
+                    <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
+                        <tr>        
+                            <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                                {{ assignment.assignment_name }}
+                            </td>
+                            <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                                {{ assignment.due_date }}
+                            </td>
+                            <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                                {{ assignment.assignment_class }}
+                            </td>
+                            <!-- <td class="text-primary">
+                                $36,738
+                            </td> -->
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </ul>
+    </div>
+</div>
+
+{% endif %}
 {% endblock %}
+

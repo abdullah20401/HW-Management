@@ -22,7 +22,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-item {% if url_name == 'assignment'%}active{% endif %}">
+                <li class="nav-item {% if url_name == 'assignment' or url_name == 'new-assignment' or url_name == 'assignment-detail' or url_name == 'assignment-complete' or url_name == 'assignment-update' or url_name == 'assignment-delete'%}active{% endif %}">
                     <a class="nav-link" href="{% url 'assignment' %}">
                         <i class="material-icons">assignment_turned_in</i>
                         <p>Assignments</p>
@@ -46,7 +46,7 @@
                         <p>Notifications</p>
                     </a>
                 </li>
-                <li class="nav-item {% if url_name == 'account' or url_name == 'account-update' or url_name == 'account-delete'%}active{% endif %}">
+                <li class="nav-item {% if url_name == 'account' or url_name == 'account-update' or url_name == 'account-password' or url_name == 'account-delete'%}active{% endif %}">
                     <a class="nav-link" href="{% url 'account' %}">
                         <i class="material-icons">manage_accounts</i>
                         <p>Account</p>

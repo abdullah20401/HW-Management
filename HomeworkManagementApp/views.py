@@ -1,9 +1,12 @@
 from django.db.models import fields
+from django.http.response import Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, CreateView, FormView, DetailView, UpdateView, DeleteView
+from django.views.generic import View, TemplateView, CreateView, FormView, DetailView, UpdateView, DeleteView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import PermissionDenied
+from django.utils import timezone
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import LoginView
@@ -11,10 +14,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+from django.contrib import messages
 
 
 from .models import Assignment
-from .forms import CustomUserCreationForm, AssignmentCreateForm
+from .forms import CustomUserCreationForm, AssignmentCreateForm, AssignmentUpdateForm#, AssignmentDeleteForm
 
 class CustomLoginView(LoginView):
     template_name = 'HomeworkManagementApp/account/login.html'
@@ -60,12 +64,22 @@ class AssignmentView(LoginRequiredMixin, TemplateView):
         context['assignments'] = Assignment.objects.filter(user=self.request.user)
         context['assignment_count'] = context['assignments'].count()
         
+        context['assignment_completed_count'] = 0
+        for assignment in context['assignments']:
+            if assignment.completed:
+                context['assignment_completed_count'] += 1
+        
         return context
 
-class AssignmentCreate(LoginRequiredMixin, CreateView):
+class AssignmentCreateView(LoginRequiredMixin, CreateView):
     form_class = AssignmentCreateForm
     model = Assignment
-    # fields = '__all__'
+    
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('assignment')
@@ -75,9 +89,56 @@ class AssignmentDetailView(LoginRequiredMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        return super().get_context_data(**kwargs)
+
+        return context
     
+    def render_to_response(self, context, **response_kwargs):
+        if context['assignment'].user == self.request.user:
+            return super().render_to_response(context, **response_kwargs)
+        else:
+            return redirect('assignment')
+                
+class AssignmentUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = AssignmentUpdateForm
+    model = Assignment
+    template_name = 'HomeworkManagementApp/assignment_update.html'
+    success_url = reverse_lazy('assignment')
+    
+    def get(self, *args, **kwargs):
+        if Assignment.objects.get(pk=self.kwargs['pk']).user == self.request.user:
+            return super().get(*args, **kwargs)
+        else:
+            messages.error(self.request, 'You do not have permission to edit this assignment.')
+            return redirect('assignment')
+
+class AssignmentMarkAsComplete(LoginRequiredMixin, View):
+    def get(self, *args, **kwargs):
+        if Assignment.objects.get(pk=self.kwargs['pk']).user == self.request.user:
+            assignment_obj = Assignment.objects.get(pk=self.kwargs['pk'])
+            assignment_obj.completed = True
+            assignment_obj.completed_date = timezone.now()
+            assignment_obj.save()
+            return redirect('assignment')
+
+        else:
+            messages.error(self.request, 'You do not have permission to edit this assignment.')
+            return redirect('assignment')
+        
+class AssignmentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Assignment
+    template_name = 'HomeworkManagementApp/assignment_delete.html'
+    success_url = reverse_lazy('assignment')
+    def get(self, *args, **kwargs):
+        if Assignment.objects.get(pk=self.kwargs['pk']).user == self.request.user:
+            return super().get(*args, **kwargs)
+        else:
+            messages.error(self.request, 'You do not have permission to delete this assignment.')
+            return redirect('assignment')
+        
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
 
 class CourseView(LoginRequiredMixin, TemplateView):
     template_name = 'HomeworkManagementApp/course.html'
@@ -92,7 +153,7 @@ class AccountUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     fields = ['username', 'email', 'first_name', 'last_name']
     template_name = 'HomeworkManagementApp/account/account_update.html'
-    success_url = reverse_lazy('account')
+    success_url = reverse_lazy('account-detail')
     
     def get_object(self, queryset=None):
         return self.request.user

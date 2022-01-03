@@ -15,8 +15,12 @@ urlpatterns = [
     
     path('', views.HomeView.as_view(), name='home'),
     path('assignment/', views.AssignmentView.as_view(), name='assignment'),
-    path('assignment/new/', views.AssignmentCreate.as_view(), name='new-assignment'),
+    path('assignment/new/', views.AssignmentCreateView.as_view(), name='new-assignment'),
     path('assignment/<int:pk>/', views.AssignmentDetailView.as_view(), name='assignment-detail'),
+    path('assignment/<int:pk>/completed/', views.AssignmentMarkAsComplete.as_view(), name='assignment-complete'),    
+    path('assignment/<int:pk>/edit/', views.AssignmentUpdateView.as_view(), name='assignment-update'),
+    path('assignment/<int:pk>/edit/delete/', views.AssignmentDeleteView.as_view(), name='assignment-delete'),
+    
     path('course/', views.CourseView.as_view(), name='course'),
     path('instructor/', views.InstructorView.as_view(), name='instructor'),
     

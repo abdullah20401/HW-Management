@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<h2 class="title text-info">Edit Assignment</h2>
+
+<div class="row">
+    <div class="card">
+        <div class="card-body padding">
+            <form method="POST">
+                {% csrf_token %}
+                <!-- {{ form|crispy }} -->    
+                <div class="form-group">
+                    <label>{{ form.assignment_name.label }}:</label>
+                    {{ form.assignment_name }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.assignment_description.label }}:</label>
+                    {{ form.assignment_description }}
+                </div>
+
+                <div class="form-group">
+                    <label>{{form.assignment_class.label}}:</label>
+                    {{ form.assignment_class }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.date_assigned.label }}:</label>
+                    {{ form.date_assigned }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.due_date.label }}:</label>
+                    {{ form.due_date }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.completed.label }}:</label>
+                    {{ form.completed }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.file_attachment.label }}:</label>
+                    {{ form.file_attachment }}
+                </div>
+                <div class="card-footer">
+                    <input type="submit" class="btn btn-info" value="Save">
+                    <a href="{% url 'assignment-delete' assignment.pk %}" class="btn btn-danger" role="button"><i class="material-icons">delete_forever</i></a>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="card-footer padding-sides">
+            <a href="{% url 'account-delete' %}" class="btn btn-danger" role="button"><i class="material-icons">delete_forever</i></a>
+        </div> -->
+    </div>
+</div>
+<style>
+    .padding {
+        padding: 2.55rem 2.55rem !important;
+    }
+
+    .padding-sides {
+        padding: 2rem 1.55rem !important;
+    }
+    .material-icons-md {
+        text-align: center !important;
+        align-items: center !important;
+        font-size: 20px !important;
+    }
+    .material-icons-lg {
+        text-align: center !important;
+        align-items: center !important;
+        padding-right: 0.5rem !important;
+        font-size: 24px !important;
+    }
+</style>
+
+{% endblock %}

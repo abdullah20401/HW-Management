@@ -29,6 +29,8 @@ class Classroom(models.Model):
 class Assignment(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True)
+    completed = models.BooleanField(default=False)
+    completed_date = models.DateTimeField(null=True, blank=True)
     
     assignment_name = models.CharField(max_length=50)
     assignment_description = models.CharField(max_length=100, blank=True)

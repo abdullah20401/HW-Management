@@ -55,14 +55,24 @@ class CustomUserCreationForm(UserCreationForm):
         )  
         return user  
 
-
 class DateTimeInput(forms.DateTimeInput):
     input_type = 'datetime-local'
+    input_formats = ['%Y-%m-%dT%H:%M']
 
 class AssignmentCreateForm(forms.ModelForm):
     class Meta:
         model = Assignment
         fields = ['assignment_name', 'assignment_description', 'assignment_class', 'date_assigned', 'due_date', 'file_attachment']
+        widgets = {'due_date': DateTimeInput(), 'date_assigned': DateTimeInput()}
+
+    file_attachment = forms.FileField(
+        required=False,
+    )
+
+class AssignmentUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Assignment
+        fields = ['assignment_name', 'assignment_description', 'assignment_class', 'date_assigned', 'due_date', 'completed', 'file_attachment']
         widgets = {'due_date': DateTimeInput(), 'date_assigned': DateTimeInput()}
 
     file_attachment = forms.FileField(

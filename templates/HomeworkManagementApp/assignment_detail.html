@@ -2,41 +2,51 @@
 
 {% block content %}
 <div class="card card-nav-tabs">
-    {% if assignment.time_ago %}
+    {% if assignment.completed %}
+        <h3 class="card-header card-header-success">{{ assignment.assignment_name }}</h3>
+    {% elif assignment.time_ago %}
         <h3 class="card-header card-header-danger">{{ assignment.assignment_name }}</h3>
     {% else %}
         <h3 class="card-header card-header-info">{{ assignment.assignment_name }}</h3>
     {% endif %}
         <div class="card-body">
-            <h5 class="card-text">{{ assignment.assignment_description }}</h5>
+            <h4 class="card-text" style="font-size: 20px;">{{ assignment.assignment_description }}</h4>
             {% if assignment.file_attachment %}
                 <img class="card-img-bottom" src="{{ assignment.file_attachment.url }}" alt="File Attachment">
             {% endif %}
-            <p class="card-text">{{ assignment.assignment_class }}</p>
+            <h5 class="card-text" style="font-size: 16px;">{{ assignment.assignment_class }}</h5>
             <div class="card card-stats">
                 <div class="card-footer">
                     <div class="stats">
-                        <strong>Date Assigned:</strong>
-                        <i class="material-icons">date_range</i> {{ assignment.date_assigned }}
-                    </div>
+                        <div class="h5">
+                            <strong>Date Assigned:</strong>
+                            <i class="material-icons">date_range</i> {{ assignment.date_assigned }}
+                        </div>
+                  </div>
                     <div class="stats">
-                        {% if assignment.time_ago %}
-                        <div class="text-danger">
+                        {% if assignment.time_ago and assignment.completed is not True %}
+                        <div class="h5 text-danger">
                             <strong>Due Date:</strong>
                             <i class="material-icons">date_range</i> {{ assignment.due_date }}
                         </div>
                         {% else %}
+                        <div class="h5">
                             <strong>Due Date:</strong>
                             <i class="material-icons">date_range</i> {{ assignment.due_date }}
+                        </div>
                         {% endif %}
+
                     </div>
                 </div>
             </div>
-            {% if assignment.time_ago %}
+            {% if assignment.completed %}
+                <a href="{% url 'assignment' %}" class="btn btn-success">Go Back</a>
+            {% elif assignment.time_ago %}
                 <a href="{% url 'assignment' %}" class="btn btn-danger">Go Back</a>
             {% else %}
                 <a href="{% url 'assignment' %}" class="btn btn-info">Go Back</a>
             {% endif %}
+            <a href="{% url 'assignment-update' assignment.pk %}" class="btn btn-warning text-left" style="float: right;">Edit / Delete</a>
         </div>
     </div>
 
