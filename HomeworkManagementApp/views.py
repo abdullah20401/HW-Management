@@ -118,11 +118,11 @@ class AssignmentMarkAsComplete(LoginRequiredMixin, View):
             assignment_obj.completed = True
             assignment_obj.completed_date = timezone.now()
             assignment_obj.save()
-            return redirect('assignment')
 
         else:
             messages.error(self.request, 'You do not have permission to edit this assignment.')
-            return redirect('assignment')
+        
+        return redirect('assignment')
         
 class AssignmentDeleteView(LoginRequiredMixin, DeleteView):
     model = Assignment
