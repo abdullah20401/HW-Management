@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if assignmentstype == 'missing' %}
+    <div class="card card-nav-tabs">
+        <h4 class="card-header card-header-danger text-center">
+            <strong>Missing</strong>
+        </h4>
+        {% if assignments %}
+        <ul class="list-group list-group-flush">
+            <table class="table table-hover text-center">
+                <thead class=" text-primary">
+                    <th>
+                        <strong>Name</strong>
+                    </th>
+                    <th>
+                        <strong>Due Date</strong>
+                    </th>
+                    <th>
+                        <strong>Class</strong>
+                    </th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for assignment in missing_assignments|slice:":4" %}
+                    <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
+                    <tr>
+                        <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                            {{ assignment.assignment_name }}
+                        </td>
+                        <td class="text-danger" onclick="location.href='{% url "assignment-detail" assignment.pk
+                            %}'">
+                            {{ assignment.due_date }}
+                        </td>
+                        <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                            {{ assignment.assignment_class }}
+                        </td>
+                        <td>
+                            <button class="btn btn-success" onclick="location.href='{% url " assignment-complete"
+                                assignment.pk %}'" style="padding: 7px 7px; border-radius: 50%;"><i
+                                    class="material-icons">check</i></button>
+                        </td>
+                        <!-- <td class="text-primary">
+                                        $36,738
+                                    </td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </ul>
+        {% endif %}
+    </div>
+
+{% elif assignmentstype == 'upcoming' %}
+
+    <div class="card card-nav-tabs">
+        <h4 class="card-header card-header-info text-center">
+            <strong>Upcoming</strong>
+            <a href="{% url 'new-assignment' %}">
+                <i class="material-icons justify-content-center float-right" style="font-size: 160%">add</i>
+            </a>
+        </h4>
+        {% if assignments %}
+        <ul class="list-group list-group-flush">
+            <table class="table table-hover text-center">
+                <thead class=" text-primary">
+                    <th>
+                        <strong>Name</strong>
+                    </th>
+                    <th>
+                        <strong>Due Date</strong>
+                    </th>
+                    <th>
+                        <strong>Class</strong>
+                    </th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for assignment in upcoming_assignments|slice:":4" %}
+                    <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
+                    <tr>
+                        <td onclick="location.href='{% url " assignment-detail" assignment.pk %}'">
+                            {{ assignment.assignment_name }}
+                        </td>
+                        <td onclick="location.href='{% url " assignment-detail" assignment.pk %}'">
+                            {{ assignment.due_date }}
+                        </td>
+                        <td onclick="location.href='{% url " assignment-detail" assignment.pk %}'">
+                            {{ assignment.assignment_class }}
+                        </td>
+                        <td>
+                            <button class="btn btn-success" onclick="location.href='{% url " assignment-complete"
+                                assignment.pk %}'" style="padding: 7px 7px; border-radius: 50%;"><i
+                                    class="material-icons">check</i></button>
+                        </td>
+                        <!-- <td class="text-primary">
+                                    $36,738
+                                </td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </ul>
+        {% endif %}
+    </div>
+</div>
+
+{% elif assignmentstype == 'completed' %}
+{% if complete_assignments %}
+<div class="card card-nav-tabs">
+    <h4 class="card-header card-header-success text-center">
+        <strong>Marked as Done</strong>
+    </h4>
+    <ul class="list-group list-group-flush">
+        <table class="table table-hover text-center">
+            <thead class=" text-primary">
+                <th>
+                    <strong>Name</strong>
+                </th>
+                <th>
+                    <strong>Due Date</strong>
+                </th>
+                <th>
+                    <strong>Class</strong>
+                </th>
+            </thead>
+            <tbody>
+
+                {% for assignment in complete_assignments|slice:":4" %}
+                <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
+                <tr>
+                    <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                        {{ assignment.assignment_name }}
+                    </td>
+                    <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                        {{ assignment.due_date }}
+                    </td>
+                    <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
+                        {{ assignment.assignment_class }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </ul>
+</div>
+{% endif %}
+
+{% endif %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <a href="?page=1">&laquo; first</a>
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

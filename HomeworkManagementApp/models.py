@@ -47,3 +47,4 @@ class Assignment(models.Model):
     
     class Meta:
         order_with_respect_to = 'user'
+        

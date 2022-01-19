@@ -24,8 +24,7 @@
                                     <th></th>
                                 </thead>
                                 <tbody>
-                            {% for assignment in assignments %}
-                                {% if assignment.time_ago and assignment.completed == False %}
+                            {% for assignment in missing_assignments|slice:":4" %}
                                     <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
                                     <tr>        
                                         <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
@@ -44,9 +43,17 @@
                                             $36,738
                                         </td> -->
                                     </tr>
-                                {% endif %}
                             {% endfor %}
                                 </tbody>
+                                {% if missing_assignments|length > 4 %}
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="4">
+                                            <a href="{% url 'assignment-list-missing' %}" class="text-danger">View all...</a>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                                {% endif %}
                             </table>
                         </ul>
                 {% endif %}
@@ -61,7 +68,7 @@
                     <i class="material-icons justify-content-center float-right" style="font-size: 160%">add</i>
                 </a>
             </h4>
-         {% if assignments %}
+            {% if assignments %}
                 <ul class="list-group list-group-flush">
                     <table class="table table-hover text-center">
                         <thead class=" text-primary">
@@ -77,8 +84,7 @@
                             <th></th>
                         </thead>
                         <tbody>
-                    {% for assignment in assignments %}
-                        {% if assignment.time_ago == False and assignment.completed == False %}
+                    {% for assignment in upcoming_assignments|slice:":4" %}
                             <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
                                 <tr>
                                     <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
@@ -98,17 +104,25 @@
                                     </td> -->
                                 </tr>
 
-                        {% endif %}
                     {% endfor %}
                         </tbody>
+                        {% if upcoming_assignments|length > 4 %}
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <a href="{% url 'assignment-list-upcoming' %}" class="text-info">View all...</a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        {% endif %}
                     </table>
                 </ul>
-        {% endif %}
+            {% endif %}
         </div>
     </div>
 </div>
 
-{% if assignments and assignment_completed_count > 0 %}
+{% if complete_assignments %}
     <div class="card card-nav-tabs">
         <h4 class="card-header card-header-success text-center">
             <strong>Marked as Done</strong>
@@ -128,8 +142,7 @@
                     </thead>
                     <tbody>
                     
-                    {% for assignment in assignments %}
-                        {% if assignment.completed %}
+                    {% for assignment in complete_assignments|slice:":4" %}
                     <!-- <li class="list-group-item">{{ assignment.assignment_name }}</li> -->
                         <tr>        
                             <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
@@ -141,13 +154,18 @@
                             <td onclick="location.href='{% url "assignment-detail" assignment.pk %}'">
                                 {{ assignment.assignment_class }}
                             </td>
-                            <!-- <td class="text-primary">
-                                $36,738
-                            </td> -->
                         </tr>
-                        {% endif %}
                     {% endfor %}
                     </tbody>
+                    {% if complete_assignments|length > 4 %}
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <a href="{% url 'assignment-list-completed' %}" class="text-success">View all...</a>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    {% endif %}
                 </table>
             </ul>
     </div>
