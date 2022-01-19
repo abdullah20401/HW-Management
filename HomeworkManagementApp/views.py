@@ -75,10 +75,10 @@ class AssignmentView(LoginRequiredMixin, TemplateView):
             if assignment.completed:
                 complete_assignments.append(assignment)
 
-            elif assignment.time_ago() == False and assignment.completed == False:
+            elif assignment.time_ago() is False and assignment.completed is False:
                 upcoming_assignments.append(assignment)
 
-            elif assignment.time_ago() and assignment.completed == False:
+            elif assignment.time_ago() and assignment.completed is False:
                 missing_assignments.append(assignment)
 
         context['assignments'] = assignments
@@ -112,10 +112,10 @@ class AssignmentListView(LoginRequiredMixin, ListView):
             if assignment.completed:
                 complete_assignments.append(assignment)
 
-            elif assignment.time_ago() == False and assignment.completed == False:
+            elif assignment.time_ago() is False and assignment.completed is False:
                 upcoming_assignments.append(assignment)
 
-            elif assignment.time_ago() and assignment.completed == False:
+            elif assignment.time_ago() and assignment.completed is False:
                 missing_assignments.append(assignment)
 
         if self.request.resolver_match.url_name == 'assignment-list-completed':
